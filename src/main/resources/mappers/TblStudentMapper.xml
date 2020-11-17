@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doofy.mappers.TblStudentMapper">
+
+  <resultMap id="BaseResultMap" type="com.doofy.bean.TblStudent">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
+  </resultMap>
+
+  <resultMap id="StudentTeacher" type="com.doofy.bean.TblStudent">
+    <association property="teachers" javaType="com.doofy.bean.TblTeacher"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, `name`, tid
+  </sql>
+
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="StudentTeacher">
+    select s.id,s.name,t.id,t.name
+    from tbl_student s,tbl_teacher t
+    where s.tid=t.id and s.id=#{id}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from tbl_student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.doofy.bean.TblStudent" useGeneratedKeys="true">
+    insert into tbl_student (`name`, tid)
+    values (#{name,jdbcType=VARCHAR}, #{tid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.doofy.bean.TblStudent" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into tbl_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doofy.bean.TblStudent">
+    <!--@mbg.generated-->
+    update tbl_student
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doofy.bean.TblStudent">
+    <!--@mbg.generated-->
+    update tbl_student
+    set `name` = #{name,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
