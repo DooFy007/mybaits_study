@@ -17,14 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>nuxus</id>
-			<name>test</name>
-			<url>http://172.18.64.96:8080/nexus/content/groups/public/</url>
-			<snapshots><enabled>true</enabled></snapshots>
-		</repository>
-	</repositories>
+
 
 	<dependencies>
 		<dependency>

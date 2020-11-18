@@ -7,15 +7,20 @@
   </resultMap>
 
   <resultMap id="TeacherStudent" type="com.doofy.bean.TblTeacher">
-    <collection property="students" ofType="com.doofy.bean.TblStudent" />
+    <result property="id" column="tid"/>
+    <result property="name" column="tname"/>
+    <collection property="students" ofType="com.doofy.bean.TblStudent" >
+        <result property="id" column="sid"/>
+        <result property="name" column="sname"/>
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, `name`
   </sql>
   <select id="selectById" parameterType="java.lang.Integer" resultMap="TeacherStudent">
-    select t.id,t.name,s.id,s.name
+    select t.id tid,t.name tname,s.id sid,s.name sname
     from tbl_teacher t,tbl_student s
-    where t.id =s.tid and t.id = #{id,jdbcType=INTEGER}
+    where t.id =s.tid and t.id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
