@@ -28,7 +28,6 @@ public class StudentController {
     @ApiOperation(value = "学生查询",notes = "通过学生id查询学生")
     @ApiImplicitParam(name = "id",value = "学生id",required = true,defaultValue = "1" ,paramType = "path",dataType = "int")
     @GetMapping("/getStudentById/{id}")
-    @ResponseBody
     public TblStudent getStudentById(@PathVariable int id){
         log.info("学生查询");
         return studentService.getStudentById(id);

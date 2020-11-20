@@ -20,16 +20,6 @@ import java.util.List;
 
 public class DencryptUtil {
 
-    public static void main(String[] args) throws Exception {
-        final String key = "3231ad23d62a025e10a8320eda13a4ec3231ad23d62a025e";
-        String telePhone = "你好&*woshioo+--";
-        String threeDes = encryptBy3Des(telePhone, key);
-        System.out.println(threeDes);
-        byte[] bytes = decryptBy3Des(threeDes, key);
-        System.out.println(new String(bytes));
-
-
-    }
     public static String getParamString(JSONObject params) {
         StringBuilder sb = new StringBuilder();
         List<String> paramKeys = new ArrayList<>(params.keySet());
@@ -49,9 +39,8 @@ public class DencryptUtil {
             c.init(Cipher.DECRYPT_MODE, new SecretKeySpec(hexToBytes(k), "DESede"));
             return c.doFinal(Base64.decode(v));
         } catch (Exception e) {
-            System.out.println(e.getCause());
+           throw new RuntimeException("解密失败..");
         }
-        return new byte[0];
     }
     public static String encryptBy3Des(String value, String key) {
         try {
@@ -61,9 +50,8 @@ public class DencryptUtil {
             BASE64Encoder encoder = new BASE64Encoder();
             return encoder.encode(b).replaceAll("\r", "").replaceAll("\n", "");
         } catch (Exception e) {
-            System.out.println(e.getCause());
+            throw new RuntimeException("加密失败..");
         }
-        return "";
     }
     public static byte[] hexToBytes(String hex) {
         hex = hex.length() % 2 != 0 ? "0" + hex : hex;
@@ -76,5 +64,9 @@ public class DencryptUtil {
         return b;
     }
 
+    public static void main(String[] args) {
+        String key = ThreeDes_key.generateHexString(48);
+        System.out.println(new String(decryptBy3Des(encryptBy3Des("abc123", key),key)));
+    }
 
 }
