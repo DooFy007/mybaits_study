@@ -2,6 +2,10 @@ server:
   port: 8080
   servlet:
     context-path: /callDoofy
+  ssl:
+    key-store: classpath:javaboy.p12
+    key-alias: tomcathttps
+    key-store-password: caonimei444
 
 spring:
   datasource:
@@ -40,3 +44,4 @@ pagehelper:
 logging:
   level:
     com.doofy.mappers: debug
+

@@ -1,5 +1,6 @@
 package com.doofy;
 
+import com.MybatisStudyApplication;
 import com.doofy.bean.TblUser;
 import com.doofy.mappers.TblUserMapper;
 import org.junit.Test;
