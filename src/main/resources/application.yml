@@ -7,7 +7,35 @@ server:
     key-alias: tomcathttps
     key-store-password: caonimei444
 
+
 spring:
+  kafka:
+    bootstrap-servers: 39.100.10.218:9092
+    listener:
+      concurrency: 3
+    producer:
+      # 每次批量发送消息的数量
+      batch-size: 16
+      # 缓存容量
+      buffer-memory: 33554432
+      #设置大于0的值，则客户端会将发送失败的记录重新发送
+      retries: 0
+      # 指定消息key和消息体的编解码方式 UTF-8
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    # 消费者配置
+    consumer:
+      # 自定默认消费者group id
+      group-id: csn-group1
+      # Kafka中没有初始偏移或如果当前偏移在服务器上不再存在时,默认区最新 ，有三个选项 【latest, earliest, none】
+      auto-offset-reset: latest
+      # 是否开启自动提交
+      enable-auto-commit: true
+      # 自动提交的时间间隔
+      auto-commit-interval: 100
+      # key value解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   datasource:
     name: test
     url: jdbc:mysql://rm-8vbg3cl6kn609tl0d6o.mysql.zhangbei.rds.aliyuncs.com:3306/mybatis_study
